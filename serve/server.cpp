@@ -8,7 +8,9 @@
 #include"pool.hpp"
 #include"sock.hpp"
 #include "handle.hpp"
+#include<signal.h>
 using namespace std;
+
 int main() {
     // socket和epoll都封装得比较简单
     socker s("127.0.0.1",8888);

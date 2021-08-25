@@ -8,6 +8,7 @@
 #include <sys/shm.h>
 #include <iostream>
 #include<sys/epoll.h>
+#include "httpResponse.hpp"
 void Acceptor(int server_sock,int epfd){
     struct epoll_event event; // 此处考虑改为堆上申请
     struct sockaddr_in client_addr;
@@ -26,6 +27,9 @@ void handle(int conn){
     if(strcmp(buf,"exit") == 0) {
         close(conn);
     }
+    httpResponse* httpR = new httpResponse(200,"OK","text/plain","hello, network programming");
+    char* sendBuf = httpR->makePacket();
+    send(conn,sendBuf,sizeof(buf),0);
     // int r = send(conn,buf,sizeof(buf),0);
     std::cout << buf << "长度" << strlen(buf) <<"\n";
 }
